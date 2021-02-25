@@ -1,10 +1,11 @@
 class DogsController < ApplicationController
   before_action :set_dog, only: [:show, :edit, :update, :destroy]
+  before_action :set_page, only: [:index]
 
   # GET /dogs
   # GET /dogs.json
   def index
-    @dogs = Dog.all
+    @dogs = Dog.order(created_at: :desc).limit(5).offset(@page * 5) # This assumes that the page numbering starts from 0 instead of 1 as I gather from the question
   end
 
   # GET /dogs/1
@@ -69,6 +70,10 @@ class DogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_dog
       @dog = Dog.find(params[:id])
+    end
+
+    def set_page
+      @page = params[:page].to_i || 0
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
