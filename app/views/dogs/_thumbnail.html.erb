@@ -1,9 +1,18 @@
-<a href="<%= url_for(dog) %>">
+
   <article>
-    <h2 class="dog-name"><%= dog.name %></h2>
+    <a href="<%= url_for(dog) %>">
+      <h2 class="dog-name"><%= dog.name %></h2>
+    </a>
     <% if user == dog.user %>
       <h3>(Mine)</h3>
+    <% else %>
+      <% if dog.users.include? user %>
+        <h3>❤️</h3>
+      <% else %>
+      <%= button_to 'Like', like_dog_path(id: dog.id), method: 'post'  %>
+      <% end %>
     <% end %>
-    <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
+    <a href="<%= url_for(dog) %>">
+      <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
+    </a>
   </article>
-</a>

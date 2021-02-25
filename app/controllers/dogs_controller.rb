@@ -22,6 +22,21 @@ class DogsController < ApplicationController
   def edit
   end
 
+  def like
+    @dog = Dog.find(params[:id])
+    respond_to do |format|
+      if @dog
+        @dog.users.push(current_user)
+
+        format.html { redirect_to dogs_path, notice: 'Dog was successfully liked.' }
+        format.json { render :show, status: :no_content, location: @dog }
+      else
+        format.html { render :index }
+        format.json { render json: nil, status: :not_found }
+      end
+    end
+  end
+
   # POST /dogs
   # POST /dogs.json
   def create
