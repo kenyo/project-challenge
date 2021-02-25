@@ -1,6 +1,9 @@
 <a href="<%= url_for(dog) %>">
   <article>
     <h2 class="dog-name"><%= dog.name %></h2>
+    <% if user == dog.user %>
+      <h3>(Mine)</h3>
+    <% end %>
     <%= image_tag url_for(dog.images.first), class: "dog-photo", alt: "Photo of #{dog.name}" %>
   </article>
 </a>
